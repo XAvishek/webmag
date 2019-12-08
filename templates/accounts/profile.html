@@ -1,0 +1,47 @@
+{% extends "partials/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block header %}
+ {% include "partials/header.html" %}
+
+{% endblock header %}
+
+{% block content %}
+<br>
+  <div class="container center_div">
+  <div class='col-lg-3 col-md-3'>
+</div>
+<div class='col-lg-6 col-md-6'>
+
+  <br>
+<img class="rounded-circle" src="{{ user.profile.profile_image.url }}" height="100px" width="150px">
+<br>
+<div class="media-body">
+<h2 class="account-heading">{{user.username}}</h2>
+<p class ="text-secondary">{{user.email}}</p>
+</div>
+</div>
+<link rel="stylesheet" href="{% static 'css/content.css' %}">
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{u_form|crispy}}
+  {{p_form|crispy}}
+  <button type="submit" class="btn btn-primary" >Update profile</button>
+</form>
+<div class='col-lg-3 col-md-3'>
+    </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+ 
+   {% block footer %}
+   {% include "partials/footer.html" %}
+ {% endblock footer %}
+   
+   {% block script %}
+   {% include "partials/script.html" %}
+ {% endblock script %}

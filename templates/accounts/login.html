@@ -1,0 +1,62 @@
+{% extends "partials/base.html" %}
+{% load account %}
+{% user_display user %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+
+  {% block header %}
+  {% include "partials/header.html" %}
+  {% endblock header %}
+ 
+  {% block content %}
+  <div class="container center_div">
+  <div class='col-lg-3 col-md-3'>
+</div>
+<div class='col-lg-6 col-md-6'>
+
+  <form method="post">
+
+<br>
+
+  {{ form|crispy }}
+ <input type="checkbox" onclick="myFunction()">Show Password 
+  {% csrf_token %}
+  <button type="submit" class="btn btn-info">Submit</button>
+   <small class="text-muted ml-2">
+    <a href="{% url 'password_reset' %}"> Forget Password?</a>
+    
+  </small>
+  
+   <div class='col-lg-3 col-md-3'>
+    </div>
+  </form>
+  <span style ="padding-left:213px;">
+ <a href="{% provider_login_url 'google' %}">
+ <button type="submit" name="button" class="btn btn-danger mb-2"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_google.png">&nbsp; LOGIN WITH GOOGLE</button>
+ </a>
+</span>
+  </div>
+  </div>
+  <script>
+  function myFunction() {
+    
+  var x = document.getElementById("id_password");
+  console.log(x.type)
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+   
+  {% endblock content %}
+
+  
+  {% block footer %}
+  {% include "partials/footer.html" %}
+  {% endblock footer %}
+
+  {% block script %}
+  {% include "partials/script.html" %}
+  {% endblock script %}

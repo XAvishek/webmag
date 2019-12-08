@@ -1,0 +1,29 @@
+								<div class="media">
+									<div class="media-left">
+										<img class="media-object" src="{{ user.profile.profile_image.url }}" alt="">
+									</div>
+									<div class="media-body">
+										<div class="media-heading">
+											<h4>{{comment.comment_by}}</h4>
+											<span class="time">{{comment.created_at}}</span>
+											<a href="#" class="reply">Reply</a>
+										</div>
+										<p>{{comment.feedback}}</p>
+
+										<!-- comment -->
+										<div class="media">
+											<div class="media-left">
+												<img class="media-object" src="{{ user.profile.profile_image.url }}" alt="">
+											</div>
+											<div class="media-body">
+												<div class="media-heading">
+													<h4>{{comment.comment_by}}</h4>
+													<span class="time">{{comment.created_at}}</span>
+													<a href="#" class="reply">Reply</a>
+												</div>
+												<p>{{comment.feedback}}</p>
+											</div>
+										</div>
+										<!-- /comment -->
+									</div>
+								</div>

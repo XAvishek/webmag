@@ -1,0 +1,35 @@
+{% extends "partials/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+{% include "partials/header.html" %}
+{% endblock header %}
+
+
+
+
+{% block content %}
+ <div class="container center_div">
+  <div class='col-lg-3 col-md-3'>
+</div>
+<div class='col-lg-6 col-md-6'>
+
+<form method="POST">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-danger">SignUp </button>
+    
+    <!-- form cahi sadai pani block ra enblock ko bich ma -->
+</form><div class='col-lg-3 col-md-3'>
+    </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block footer %}
+{% include "partials/footer.html" %}
+{% endblock footer %}
+
+{% block script %}
+{% include "partials/script.html" %}
+{% endblock script %}
