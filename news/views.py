@@ -2,10 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, TemplateView, DetailView, RedirectView, CreateView, DeleteView, UpdateView
 
 from news.models import News, Comment
+from accounts.forms import EmailSignupForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-
 
 from news.forms import NewsCreateForm
 from django.http import HttpResponse
@@ -13,17 +13,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 from django.core.paginator import Paginator
-
+from django.db.models import Q
 
 
 # Create your views here.
 class NewsTemplateView(TemplateView):
     template_name='index.html'
+    form = EmailSignupForm()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         news = News.objects.all()
-
         context["latest_news"] = news.order_by("-created_at")
 
         context["webdesign_news"] = news.filter(
@@ -36,7 +36,7 @@ class NewsTemplateView(TemplateView):
             category="4").order_by("-created_at")[:4]
         context["popular_news"] = news.order_by("-count")[:4]
         context["featured_news"] = news.order_by("count")[:3]
-
+        context["form"] = self.form
         return context
 
 
@@ -72,6 +72,7 @@ class NewsCategoryView(ListView):
     context_object_name = 'category_list'
     template_name = "news/category_news.html"
     paginate_by = 2
+    form = EmailSignupForm()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -87,17 +88,18 @@ class NewsCategoryView(ListView):
 
 class NewsDetailView(DetailView):
     model = News
+    form = EmailSignupForm()
     template_name = 'news/detail_news.html'
     context_object_name = 'news'
 
     def get_context_data(self, **kwargs):
         news = News.objects.all()
-       
+
         context = super().get_context_data(**kwargs)
         context['comments'] = Comment.objects.filter(news=self.object)
         #context['my_likes'] = Like.objects.filter(news=self.object)
         context['popular_news'] = news.order_by("-count")[:4]
-       
+        context["featured_news"] = news.order_by("count")[:2]
         # context["tags"] = TaggableManager().bulk_related_objects(self.object)
         self.object.count = self.object.count + 1
         self.object.save()
@@ -113,7 +115,6 @@ class NewsUpdateView(LoginRequiredMixin, UpdateView):
 
 class NewsDeleteView(LoginRequiredMixin, DeleteView):
     model = News
-
     success_url = reverse_lazy("home")
 
 
@@ -127,3 +128,23 @@ def create_comment(request, **kwargs):
     comment = Comment(**payload)
     comment.save()
     return render(request, "news/comment.html", {"comment": comment})
+
+
+
+class SearchResultsView(ListView):
+    model = News
+    template_name = 'search_results.html'    
+
+    def get_context_data(self, **kwargs):
+        news = News.objects.all()
+        context = super().get_context_data(**kwargs)
+        context['popular_news'] = news.order_by("-count")[:4]
+        context["featured_news"] = news.order_by("count")[:2]
+        return context
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = News.objects.filter(Q(title__icontains=query) |
+        Q(story__icontains=query)
+        ) 
+        return object_list

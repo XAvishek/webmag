@@ -6,35 +6,26 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">	
+				{% for news in featured_news %}				
+				{% if forloop.counter < 3 %}
+				
 					<!-- post -->
 					<div class="col-md-6">
 						<div class="post post-thumb">
-							<a class="post-img" href="blog-post.html"><img src='{% static "img/post-1.jpg" %}' alt=""></a>
+							<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{news.cover_image.url}}' alt=""></a>
 							<div class="post-body">
 								<div class="post-meta">
-									<a class="post-category cat-2" href="category.html">JavaScript</a>
-									<span class="post-date">March 27, 2018</span>
+									<a class="post-category cat-{{news.category}}" href="category.html">JavaScript</a>
+									<span class="post-date">{{news.created_at.date}}</span>
 								</div>
-								<h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
+								<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
 							</div>
 						</div>
 					</div>
+					{% endif %}
+					{% endfor %}
 					<!-- /post -->
 
-					<!-- post -->
-					<div class="col-md-6">
-						<div class="post post-thumb">
-							<a class="post-img" href="blog-post.html"><img src='{% static "img/post-2.jpg" %}' alt=""></a>
-							<div class="post-body">
-								<div class="post-meta">
-									<a class="post-category cat-3" href="category.html">Jquery</a>
-									<span class="post-date">March 27, 2018</span>
-								</div>
-								<h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-							</div>
-						</div>
-					</div>
-					<!-- /post -->
 				</div>
 				<!-- /row -->
 
@@ -51,13 +42,13 @@
 					{% if forloop.counter < 4 %}										
 					<div class="col-md-4">
 						<div class="post">
-							<a class="post-img" href="blog-post.html"><img src='{{ news.cover_image.url }}' alt=""></a>
+							<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{ news.cover_image.url }}' alt=""></a>
 							<div class="post-body">
 								<div class="post-meta">
 									<a class="post-category cat-{{news.category}}" href="category.html">{{news.get_category_display}}</a>
 									<span class="post-date">{{news.created_at.date}}</span>
 								</div>
-								<h3 class="post-title"><a href="blog-post.html">{{news.title}}</a></h3>
+								<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
 							</div>
 						</div>
 					</div>
@@ -72,13 +63,13 @@
 					{% if forloop.counter > 3 and forloop.counter < 7 %}										
 					<div class="col-md-4">
 						<div class="post">
-							<a class="post-img" href="blog-post.html"><img src='{{ news.cover_image.url }}' alt=""></a>
+							<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{ news.cover_image.url }}' alt=""></a>
 							<div class="post-body">
 								<div class="post-meta">
 									<a class="post-category cat-{{news.category}}" href="category.html">{{news.get_category_display}}</a>
 									<span class="post-date">{{news.created_at.date}}</span>
 								</div>
-								<h3 class="post-title"><a href="blog-post.html">{{news.title}}</a></h3>
+								<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
 							</div>
 						</div>
 					</div>
@@ -98,13 +89,13 @@
 							{% if forloop.counter == 7 %}
 							<div class="col-md-12">
 								<div class="post post-thumb">
-									<a class="post-img" href="blog-post.html"><img src='{{ news.cover_image.url }}' alt=""></a>
+									<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{ news.cover_image.url }}' alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
 											<a class="post-category cat-{{news.category}}" href="category.html">{{news.get_category_display}}</a>
 											<span class="post-date">{{news.created_at.date}}</span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">{{news.title}}</a></h3>
+										<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
 									</div>
 								</div>
 							</div>
@@ -117,13 +108,13 @@
 							{% if forloop.counter > 7 and forloop.counter < 10 %}
 							<div class="col-md-6">
 								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src='{{ news.cover_image.url }}' alt=""></a>
+									<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{ news.cover_image.url }}' alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
 											<a class="post-category cat-{{news.category}}" href="category.html">{{news.get_category_display}}</a>
 											<span class="post-date">{{news.created_at.date}}</span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">{{news.title}}</a></h3>
+										<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
 									</div>
 								</div>
 							</div>
@@ -138,13 +129,13 @@
 							{% if forloop.counter > 9 and forloop.counter < 12 %}
 							<div class="col-md-6">
 								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src='{{ news.cover_image.url }}' alt=""></a>
+									<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{ news.cover_image.url }}' alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
 											<a class="post-category cat-{{news.category}}" href="category.html">{{news.get_category_display}}</a>
 											<span class="post-date">{{news.created_at.date}}</span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">{{news.title}}</a></h3>
+										<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
 									</div>
 								</div>
 							</div>
@@ -159,13 +150,13 @@
 							{% if forloop.counter > 11 and forloop.counter < 14 %}
 							<div class="col-md-6">
 								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src='{{ news.cover_image.url }}' alt=""></a>
+									<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{ news.cover_image.url }}' alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
 											<a class="post-category cat-{{news.category}}" href="category.html">{{news.get_category_display}}</a>
 											<span class="post-date">{{news.created_at.date}}</span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">{{news.title}}</a></h3>
+										<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
 									</div>
 								</div>
 							</div>
@@ -183,9 +174,9 @@
 							</div>
 							{% for news in popular_news  %}
 							<div class="post post-widget">
-								<a class="post-img" href="blog-post.html"><img src='{{ news.cover_image.url }}' alt=""></a>
+								<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{ news.cover_image.url }}' alt=""></a>
 								<div class="post-body">
-									<h3 class="post-title"><a href="blog-post.html">{{news.title}}</a></h3>
+									<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
 								</div>
 							</div>
 							{% endfor %}
@@ -201,13 +192,13 @@
 							
 							
 							<div class="post post-thumb">
-								<a class="post-img" href="blog-post.html"><img src='{{ news.cover_image.url }}' alt=""></a>
+								<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{ news.cover_image.url }}' alt=""></a>
 								<div class="post-body">
 									<div class="post-meta">
 										<a class="post-category cat-{{news.category}}" href="category.html">{{news.get_category_display}}</a>
 										<span class="post-date">{{news.created_at.date}}</span>
 									</div>
-									<h3 class="post-title"><a href="blog-post.html">{{news.title}}</a></h3>
+									<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
 								</div>
 							</div>
 							{% endfor %}
@@ -244,13 +235,13 @@
 					<!-- post -->
 					<div class="col-md-4">
 						<div class="post">
-							<a class="post-img" href="blog-post.html"><img src='{{ news.cover_image.url }}' alt=""></a>
+							<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{ news.cover_image.url }}' alt=""></a>
 							<div class="post-body">
 								<div class="post-meta">
 									<a class="post-category cat-2" href="category.html">{{news.get_category_display}}</a>
 									<span class="post-date">{{news.created_at.date}}</span>
 								</div>
-								<h3 class="post-title"><a href="blog-post.html">{{news.title}}</a></h3>
+								<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
 							</div>
 						</div>
 					</div>
@@ -283,14 +274,14 @@
 							
 							
 								<div class="post post-row">
-									<a class="post-img" href="blog-post.html"><img src='{{ news.cover_image.url }}' alt=""></a>
+									<a class="post-img" href="{{ news.get_absolute_url }}"><img src='{{ news.cover_image.url }}' alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
 											<a class="post-category cat-{{ news.category }}" href="category.html">{{news.get_category_display}}</a>
 											<span class="post-date">{{news.created_at.date}}</span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
+										<h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
+										<p>{{ news.story|truncatewords:10 }}...</p>
 									</div>
 								</div>
 								{% endfor %}
@@ -315,10 +306,10 @@
 							</div>
 							<div class="category-widget">
 								<ul>
-									<li><a href="#" class="cat-1">Web Design<span>340</span></a></li>
-									<li><a href="#" class="cat-2">JavaScript<span>74</span></a></li>
-									<li><a href="#" class="cat-4">JQuery<span>41</span></a></li>
-									<li><a href="#" class="cat-3">CSS<span>35</span></a></li>
+									<li><a href="{% url 'category_news' category='Web Design' %}" class="cat-1">Web Design<span>340</span></a></li>
+									<li><a href="{% url 'category_news' category='JavaScript' %}" class="cat-2">JavaScript<span>74</span></a></li>
+									<li><a href="{% url 'category_news' category='CSS' %}" class="cat-3">CSS<span>35</span></a></li>
+									<li><a href="{% url 'category_news' category='Jquery' %}" class="cat-4">JQuery<span>41</span></a></li>
 								</ul>
 							</div>
 						</div>

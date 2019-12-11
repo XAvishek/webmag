@@ -12,6 +12,7 @@ pillow = "*"
 django-crispy-forms = "*"
 django-allauth = "*"
 python-dotenv = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

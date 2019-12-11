@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from accounts.models import User
 from django.views import View
-from accounts.forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm
+from accounts.forms import UserSignUpForm, UserUpdateForm, ProfileUpdateForm, EmailSignupForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.db import transaction
-
-
+from django.conf import settings
+from django.http import HttpResponseRedirect
+import json
+import requests
 
 def signup(request):
     if request.method == 'POST':
@@ -48,3 +50,36 @@ def profile(request):
         'p_form':p_form
     }
     return render(request, 'accounts/profile.html', context)
+
+MAILCHIMP_API_KEY = settings.MAILCHIMP_API_KEY
+MAILCHIMP_DATA_CENTER = settings.MAILCHIMP_DATA_CENTER
+MAILCHIMP_EMAIL_LIST_ID = settings.MAILCHIMP_EMAIL_LIST_ID
+
+api_url = f'https://{MAILCHIMP_DATA_CENTER}.api.mailchimp.com/3.0'
+members_endpoint = f'{api_url}/lists/{MAILCHIMP_EMAIL_LIST_ID}/members'
+
+def subscribe(email):
+    data = {
+        'email_address': email,
+        'status': 'subscribed'
+    }
+    r = requests.post(
+        members_endpoint,
+        auth=('', MAILCHIMP_API_KEY),
+        data=json.dumps(data)
+    )
+    return r.status_code, r.json()
+
+def email_list_user(request):
+    
+    form = EmailSignupForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            email_user_qs = User.objects.filter(email=form.instance.email)
+            if email_user_qs.exists():
+                messages.info(request, 'You are already subscribed')
+            else:
+                subscribe(form.instance.email)
+                form.save()
+                messages.success(request, 'You have successfully subscribed')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
